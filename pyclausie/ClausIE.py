@@ -19,7 +19,7 @@ import zipfile
 
 DEFAULT_CLAUSIE_VERSION = '0-0-1'
 
-INSTALL_DIR = '~/.local/share/pyclausie/'
+INSTALL_DIR = ''
 
 class ClausIE:
     """ This is an abstract base class for extracting triples from a
@@ -72,14 +72,14 @@ class ClausIE:
         if os.path.exists(self.jar_filename):
             return
 
-        jar_url = self.get_jar_url(version)
+        # jar_url = self.get_jar_url(version)
         filename = 'clausie-%s.zip' % version
         install_dir = os.path.expanduser(INSTALL_DIR)
         zip_filename = os.path.join(install_dir, filename)
-        if verbose:
-            print("Downloading %r -> %r" % (jar_url, zip_filename))
-        opener = ErrorAwareURLOpener()
-        opener.retrieve(jar_url, filename=zip_filename)
+        # if verbose:
+        #     print("Downloading %r -> %r" % (jar_url, zip_filename))
+        # opener = ErrorAwareURLOpener()
+        # opener.retrieve(jar_url, filename=zip_filename)
         with zipfile.ZipFile(zip_filename, 'r') as zip_file:
             zip_file.extractall(install_dir)
 
