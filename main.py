@@ -1,7 +1,7 @@
 import spacy
 from deta import Deta
 from pyclausie import ClausIE
-import logging
+import sys
 import threading, json, time
 
 cl = ClausIE.get_instance()
@@ -192,13 +192,13 @@ while True:
         st_time = time.time()
         fetch_ = db.fetch({"triple": []}, limit=1)   
         key, summary = fetch_.items[0]['key'], fetch_.items[0]['summary']
-        logging.info(f'key: {key}')
+        sys.stdout.write(f'\r{key} {summary}')
         db.update({"triple": [0]}, key)
         triple = text2triple(summary)
-        end_time = time.time()
-        logging.info(f'triple: {triple}')
+        sys.stdout.write(f'\r{triple}')
         db.update({"triple": triple}, key)
-        logging.info(f'cost time: {end_time - st_time}')
+        end_time = time.time()
+        sys.stdout.write(f'\r{end_time-st_time}')
     except:
         pass
     
