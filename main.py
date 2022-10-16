@@ -3,6 +3,7 @@ from deta import Deta
 from pyclausie import ClausIE
 import sys
 import threading, json, time
+import pymysql
 
 cl = ClausIE.get_instance()
 nlp = spacy.load("en_core_web_sm")
@@ -184,22 +185,22 @@ def text2triple(data: list) -> list:
     return resul
 
 while True:
-    try:
-        sys.stdout.write('statr')
-        threads = []
-        deta = Deta("c0n2m8ps_dYJJgbcdp4ChiD9SunpuNvMQUmr1XFV5")
-        db = deta.Base("mNews_test")
-        
-        st_time = time.time()
-        fetch_ = db.fetch({"triple": []}, limit=1)   
-        key, summary = fetch_.items[0]['key'], fetch_.items[0]['summary']
-        sys.stdout.write(f'\r{key} {summary}')
-        db.update({"triple": [0]}, key)
-        triple = text2triple(summary)
-        sys.stdout.write(f'\r{triple}')
-        db.update({"triple": triple}, key)
-        end_time = time.time()
-        sys.stdout.write(f'\r{end_time-st_time}')
-    except:
-        pass
+    
+    sys.stdout.write('statr')
+    threads = []
+    conn = pymysql.connect(host='kg-0-do-user-12664850-0.b.db.ondigitalocean.com', port=25060, user='doadmin', passwd='AVNS_ChQ9XEZe8yJp6EeuMkl', db='defaultdb', charset='utf8')
+    c = conn.cursor()
+
+    st_time = time.time()
+    c.execute("SELECT * FROM `test` WHERE `triple` = '' LIMIT 1")
+    data = c.fetchall()[0]
+    print(data)
+
+    id, summary = data[0], data[1]
+    c.execute(f"UPDATE `test` SET `triple` = 'processing' WHERE `id` = {id}")
+    triple = text2triple(summary)
+    print(f"UPDATE `test` SET `triple` = {triple} WHERE `id` = {id}")
+    c.execute('update `test` set `triple` = %s where `id` = %s', (str(triple), id))
+    end_time = time.time()
+    sys.stdout.write(f'\r{end_time-st_time}')
     
