@@ -183,18 +183,16 @@ def text2triple(data: list) -> list:
     return resul
 
 while True:
-    try:
-        threads = []
-        deta = Deta("c0n2m8ps_TtXQnS5usZ4WhGHBMC49yVwsCB2cmQry")
-        db = deta.Base("mNews_test")
-        
+    threads = []
+    deta = Deta("c0n2m8ps_TtXQnS5usZ4WhGHBMC49yVwsCB2cmQry")
+    db = deta.Base("mNews_test")
+    
 
-        fetch_ = db.fetch({"triple": []}, limit=1)   
-        key, summary = fetch_.items[0]['key'], fetch_.items[0]['summary']
-        print(key)
-        db.update({"triple": [0]}, key)
-        triple = text2triple(summary)
-        print(triple)
-        db.update({"triple": triple}, key)
-    except:
-        pass
+    fetch_ = db.fetch({"triple": []}, limit=1)   
+    key, summary = fetch_.items[0]['key'], fetch_.items[0]['summary']
+    print(key)
+    db.update({"triple": [0]}, key)
+    triple = text2triple(summary)
+    print(triple)
+    db.update({"triple": triple}, key)
+    
