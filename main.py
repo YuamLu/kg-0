@@ -185,6 +185,7 @@ def text2triple(data: list) -> list:
 
 while True:
     try:
+        sys.stdout.write('statr')
         threads = []
         deta = Deta("c0n2m8ps_TtXQnS5usZ4WhGHBMC49yVwsCB2cmQry")
         db = deta.Base("mNews_test")
