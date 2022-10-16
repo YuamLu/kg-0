@@ -187,7 +187,7 @@ while True:
     try:
         sys.stdout.write('statr')
         threads = []
-        deta = Deta("c0n2m8ps_TtXQnS5usZ4WhGHBMC49yVwsCB2cmQry")
+        deta = Deta("c0n2m8ps_dYJJgbcdp4ChiD9SunpuNvMQUmr1XFV5")
         db = deta.Base("mNews_test")
         
         st_time = time.time()
