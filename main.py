@@ -185,22 +185,26 @@ def text2triple(data: list) -> list:
     return resul
 
 while True:
+    try:
     
-    sys.stdout.write('statr')
-    threads = []
-    conn = pymysql.connect(host='kg-0-do-user-12664850-0.b.db.ondigitalocean.com', port=25060, user='doadmin', passwd='AVNS_ChQ9XEZe8yJp6EeuMkl', db='defaultdb', charset='utf8')
-    c = conn.cursor()
+        sys.stdout.write('statr')
+        threads = []
+        conn = pymysql.connect(host='kg-0-do-user-12664850-0.b.db.ondigitalocean.com', port=25060, user='doadmin', passwd='AVNS_ChQ9XEZe8yJp6EeuMkl', db='defaultdb', charset='utf8')
+        c = conn.cursor()
 
-    st_time = time.time()
-    c.execute("SELECT * FROM `test` WHERE `triple` = '' LIMIT 1")
-    data = c.fetchall()[0]
-    print(data)
+        st_time = time.time()
+        c.execute("SELECT * FROM `test` WHERE `triple` = '' LIMIT 1")
+        data = c.fetchall()[0]
+        print(data)
 
-    id, summary = data[0], data[1]
-    c.execute(f"UPDATE `test` SET `triple` = 'processing' WHERE `id` = {id}")
-    triple = text2triple(summary)
-    print(f"UPDATE `test` SET `triple` = {triple} WHERE `id` = {id}")
-    c.execute('update `test` set `triple` = %s where `id` = %s', (str(triple), id))
-    end_time = time.time()
-    sys.stdout.write(f'\r{end_time-st_time}')
+        id, summary = data[0], data[1]
+        c.execute(f"UPDATE `test` SET `triple` = 'processing' WHERE `id` = {id}")
+        triple = text2triple(summary)
+        print(f"UPDATE `test` SET `triple` = {triple} WHERE `id` = {id}")
+        c.execute('update `test` set `triple` = %s where `id` = %s', (str(triple), id))
+        end_time = time.time()
+        sys.stdout.write(f'\r{end_time-st_time}')
+    
+    except:
+        pass
     
