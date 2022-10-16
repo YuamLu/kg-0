@@ -1,7 +1,8 @@
 import spacy
 from deta import Deta
 from pyclausie import ClausIE
-import threading, json
+import logging
+import threading, json, time
 
 cl = ClausIE.get_instance()
 nlp = spacy.load("en_core_web_sm")
@@ -188,14 +189,16 @@ while True:
         deta = Deta("c0n2m8ps_TtXQnS5usZ4WhGHBMC49yVwsCB2cmQry")
         db = deta.Base("mNews_test")
         
-
+        st_time = time.time()
         fetch_ = db.fetch({"triple": []}, limit=1)   
         key, summary = fetch_.items[0]['key'], fetch_.items[0]['summary']
-        print(key)
+        logging.info(f'key: {key}')
         db.update({"triple": [0]}, key)
         triple = text2triple(summary)
-        print(triple)
+        end_time = time.time()
+        logging.info(f'triple: {triple}')
         db.update({"triple": triple}, key)
+        logging.info(f'cost time: {end_time - st_time}')
     except:
         pass
     
