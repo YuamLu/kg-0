@@ -188,7 +188,7 @@ while True:
     
     sys.stdout.write('statr')
     threads = []
-    conn = pymysql.connect(host='kg-0-do-user-12664850-0.b.db.ondigitalocean.com', port=25060, user='doadmin', passwd='AVNS_ChQ9XEZe8yJp6EeuMkl', db='defaultdb', charset='utf8')
+    conn = pymysql.connect(host='kg-0-do-user-12664850-0.b.db.ondigitalocean.com', port=25060, user='doadmin', passwd='AVNS_zXaz4rfZeENzBbZrihu', db='defaultdb', charset='utf8')
     c = conn.cursor()
 
     st_time = time.time()
