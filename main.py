@@ -188,22 +188,30 @@ while True:
     
     sys.stdout.write('statr')
     threads = []
-    conn = pymysql.connect(host='kg-0-do-user-12664850-0.b.db.ondigitalocean.com', port=25060, user='doadmin', passwd='AVNS_zXaz4rfZeENzBbZrihu', db='defaultdb', charset='utf8')
+    conn = pymysql.connect(host='db-mysql-nyc1-54982-do-user-12664850-0.b.db.ondigitalocean.com', port=25060, user='doadmin', passwd='AVNS_b83V99ApzBOgDm3qIHI', db='defaultdb', charset='utf8')
     c = conn.cursor()
 
     st_time = time.time()
     c.execute("SELECT * FROM `test` WHERE `triple` = '' LIMIT 1")
     data = c.fetchall()[0]
+    conn.close()
     print(data)
 
     id, summary = data[0], data[1]
+    conn = pymysql.connect(host='db-mysql-nyc1-54982-do-user-12664850-0.b.db.ondigitalocean.com', port=25060, user='doadmin', passwd='AVNS_b83V99ApzBOgDm3qIHI', db='defaultdb', charset='utf8')
+    c = conn.cursor()
     c.execute(f"UPDATE `test` SET `triple` = 'processing' WHERE `id` = {id}")
     conn.commit()
+    conn.close()
     triple = text2triple(summary)
     print(f"UPDATE `test` SET `triple` = {triple} WHERE `id` = {id}")
+    conn = pymysql.connect(host='db-mysql-nyc1-54982-do-user-12664850-0.b.db.ondigitalocean.com', port=25060, user='doadmin', passwd='AVNS_b83V99ApzBOgDm3qIHI', db='defaultdb', charset='utf8')
+    c = conn.cursor()
     c.execute('update `test` set `triple` = %s where `id` = %s', (str(triple), id))
     conn.commit()
+    conn.close()
     end_time = time.time()
     sys.stdout.write(f'\r{end_time-st_time}')
+
     
     
